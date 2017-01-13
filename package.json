@@ -1,0 +1,14 @@
+{
+  "name": "discoji",
+  "version": "1.0.0",
+  "description": "convert text into a map of emojis",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/tests.js \"NOOB\" \":chanto:\" \":sard:\""
+  },
+  "author": "marc",
+  "license": "ISC"
+}
