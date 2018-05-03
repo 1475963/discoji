@@ -12,3 +12,6 @@ the dawn of a discord bot
 * Handle discord message limit
 * Implement nyan cat mode
 * Animations
+* Add a logger
+* Use a database for character representation
+* A character class to store representation and apply textures
