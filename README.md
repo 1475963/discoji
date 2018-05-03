@@ -16,3 +16,4 @@ the dawn of a discord bot
 * Use a database for character representation
 * A character class to store representation and apply textures
 * Got an issue with some emojis, they are not in our emoji range in the emoji validation
+* Default icons when not specified in the command do not work anymore
