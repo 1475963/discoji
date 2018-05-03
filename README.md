@@ -15,3 +15,4 @@ the dawn of a discord bot
 * Add a logger
 * Use a database for character representation
 * A character class to store representation and apply textures
+* Got an issue with some emojis, they are not in our emoji range in the emoji validation

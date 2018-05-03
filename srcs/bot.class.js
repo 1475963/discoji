@@ -2,8 +2,8 @@
 
 const { Client } = require('discord.js');
 
-const Command = require('./command.class');
-const EmojiEncoder = require('./emojiencoder.class');
+const CommandInterpreter = require('./command-interpreter.class');
+const EmojiEncoder = require('./emoji-encoder.class');
 
 function init(done) {
   console.log('Connection established to discord, the bot is ready to roll');
@@ -19,14 +19,17 @@ function error(done, err) {
 
 function flow(message) {
   console.log('INCOMING MESSAGE ->', message.content);
-  const command = new Command(this.user.id, message.content);
+  const interpreter = new CommandInterpreter(this.user.id);
+  const { command, errors } = interpreter.structure(message.content);
 
-  const error = command.isValid() || command.structure();
-  if (error)
-    return error;
-  console.log('sentence: ', command.sentence);
-  console.log('bg: ', command.backgroundIcon);
-  console.log('font: ', command.fontIcon);
+  if (errors) {
+    errors.reply && message.reply('\n' + errors.errors.join('\n'));
+    return errors.errors;
+  }
+
+  console.log('structuredMessage:', JSON.stringify(command, null, 4));
+  console.log('errors:', JSON.stringify(errors, null, 4));
+  /*
   const encoder = new EmojiEncoder(command.backgroundIcon, command.fontIcon);
   let replies = encoder.encode(command.sentence);
   if (typeof replies !== 'object') {
@@ -36,6 +39,7 @@ function flow(message) {
   console.log('replies:');
   console.log(JSON.stringify(replies, null, 4));
   message.reply(replies);
+  */
   //      let frames = formatAnimation(replies);
   /*
     animate(replies, 0, message, false);
@@ -54,7 +58,7 @@ class Bot {
       this.discordClient.on('error', err => error.bind(this.discordClient, reject)(err));
       this.discordClient.on('message', message => {
         const err = flow.bind(this.discordClient)(message);
-        err && console.error(err);
+        err && console.error('err:', err);
       });
 
       this.discordClient.login(this.token);
