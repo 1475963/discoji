@@ -68,11 +68,6 @@ class CommandInterpreter {
     this.id = botId;
   }
 
-  isValid() {
-    if (this.userId !== this.prefix || !this.tokens.length)
-      return new Error('Your message has a wrong format');
-  }
-
   structure(message) {
     const tokens = tokenize(standardiseMessage(message))
     const command = new Command(tokens[0], tokens.slice(1, -2).join(' '),
