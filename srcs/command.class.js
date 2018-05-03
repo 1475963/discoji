@@ -41,7 +41,8 @@ class Command {
   }
 
   isValid() {
-    return this.userId === this.prefix && this.tokens.length;
+    if (this.userId !== this.prefix || !this.tokens.length)
+      return new Error('Your message has a wrong format');
   }
 
   structure() {
@@ -65,8 +66,7 @@ class Command {
     }
 
     if (this.backgroundIcon === this.fontIcon)
-      throw new Error(
-        'No way, you are going nowhere with this combination of emojis');
+      return new Error('No way, you are going nowhere with this combination of emojis');
   }
 
   set message(value) {
